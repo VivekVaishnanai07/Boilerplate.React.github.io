@@ -4,6 +4,7 @@ import PrivateLayout from './layout/main/private-layout'
 import Login from './pages/auth/login/login'
 import Customer from './pages/customer/index'
 import Dashboard from './pages/dashboard'
+import Error from './pages/error'
 import Product from './pages/product/index'
 
 interface IProps { }
@@ -17,6 +18,7 @@ const MainNavigation: React.FC<IProps> = (props) => {
           <PrivateLayout path={"/dashboard"} component={Dashboard} exact />
           <PrivateLayout path={"/customer"} component={Customer} exact />
           <PrivateLayout path={"/product"} component={Product} exact />
+          <PrivateLayout path={"*"} component={Error} exact />
         </Switch>
       </Router>
     </>
