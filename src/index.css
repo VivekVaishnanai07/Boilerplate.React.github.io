@@ -1,0 +1,16 @@
+.dashboard-body-color {
+  background-color: lightgray !important;
+}
+
+.navbar-body-color {
+  background-color: #100F0F !important;
+}
+
+.navbar-content-color {
+  color: white !important;
+  background-color: #100F0F !important;
+}
+
+#navbar-body-height {
+  height: inherit !important
+}
