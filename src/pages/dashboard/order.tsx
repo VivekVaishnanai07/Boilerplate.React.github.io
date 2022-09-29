@@ -10,7 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { row } from './types';
 
-export default function Orders() {
+export default function Order() {
   return (
     <React.Fragment>
       <Typography className='title-font' component="h2" variant="h6" gutterBottom>

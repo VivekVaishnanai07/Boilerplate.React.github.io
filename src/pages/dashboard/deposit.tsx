@@ -6,7 +6,7 @@ function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
 }
 
-export default function Deposits() {
+export default function Deposit() {
   return (
     <React.Fragment>
       <Typography className='title-font' component="h2" variant="h6" gutterBottom>

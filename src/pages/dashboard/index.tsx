@@ -10,8 +10,8 @@ import Typography from '@mui/material/Typography';
 import ReactEcharts, { EChartsOption } from 'echarts-for-react';
 import { useEffect, useState } from 'react';
 import NavBar from '../../layout/nav';
-import Deposits from './deposits';
-import Orders from './orders';
+import Deposit from './deposit';
+import Order from './order';
 
 function Copyright(props: any) {
   return (
@@ -137,13 +137,13 @@ function Dashboard() {
                     height: 240,
                   }}
                 >
-                  <Deposits />
+                  <Deposit />
                 </Paper>
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
+                  <Order />
                 </Paper>
               </Grid>
             </Grid>

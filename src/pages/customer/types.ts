@@ -5,7 +5,6 @@ export interface AddressDetails {
   street: string
 }
 
-
 export interface CustomerDetail {
   id: number,
   address: AddressDetails,

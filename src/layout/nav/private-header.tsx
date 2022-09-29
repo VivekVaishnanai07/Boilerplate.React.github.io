@@ -10,7 +10,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
-import { logout } from '../main/types';
+import { logout } from '../../pages/util/navbar-config';
 
 export const PrivateHeader = (
   <React.Fragment>
