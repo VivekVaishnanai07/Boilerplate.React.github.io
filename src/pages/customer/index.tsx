@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import NavBar from '../../layout/nav';
-import CustomerTable from './customers-table';
+import CustomerTable from './customer-table';
 
 function Copyright(props: any) {
   return (
@@ -25,7 +25,7 @@ function Copyright(props: any) {
 
 const mdTheme = createTheme();
 
-function Customers() {
+function Customer() {
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -70,4 +70,4 @@ function Customers() {
     </ThemeProvider >
   );
 }
-export default Customers;
+export default Customer;

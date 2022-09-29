@@ -101,7 +101,7 @@ export default function CustomerTable() {
             />
             <TableBody>
               {customersDetails.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
+                .map((row: any, index: number) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 

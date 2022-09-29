@@ -7,6 +7,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
+
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 import { logout } from '../main/types';
@@ -22,7 +23,7 @@ export const PrivateHeader = (
       <ListItemText primary="Dashboard" />
     </ListItemButton>
     <ListItemButton>
-      <Link to={'/customers'}>
+      <Link to={'/customer'}>
         <ListItemIcon>
           <PeopleIcon className='navbar-content-color' />
         </ListItemIcon>
@@ -30,7 +31,7 @@ export const PrivateHeader = (
       <ListItemText primary="Customers" />
     </ListItemButton>
     <ListItemButton>
-      <Link to={'/products'}>
+      <Link to={'/product'}>
         <ListItemIcon>
           <ShoppingCartIcon className='navbar-content-color' />
         </ListItemIcon>

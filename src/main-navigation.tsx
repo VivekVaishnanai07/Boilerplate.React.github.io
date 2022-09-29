@@ -2,9 +2,9 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import PrivateLayout from './layout/main/private-layout'
 import Login from './pages/auth/login/login'
-import Customers from './pages/customers/index'
+import Customer from './pages/customer/index'
 import Dashboard from './pages/dashboard'
-import Products from './pages/products'
+import Product from './pages/product/index'
 
 interface IProps { }
 
@@ -15,8 +15,8 @@ const MainNavigation: React.FC<IProps> = (props) => {
         <Switch>
           <Route path={"/"} component={Login} exact />
           <PrivateLayout path={"/dashboard"} component={Dashboard} exact />
-          <PrivateLayout path={"/customers"} component={Customers} exact />
-          <PrivateLayout path={"/products"} component={Products} exact />
+          <PrivateLayout path={"/customer"} component={Customer} exact />
+          <PrivateLayout path={"/product"} component={Product} exact />
         </Switch>
       </Router>
     </>

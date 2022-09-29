@@ -24,7 +24,7 @@ function Copyright(props: any) {
 
 const mdTheme = createTheme();
 
-function Products() {
+function Product() {
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -76,4 +76,4 @@ function Products() {
   );
 }
 
-export default Products;
+export default Product;

@@ -1,11 +1,14 @@
-export interface CustomersDetails {
+export interface AddressDetails {
+  country: string,
+  state: string,
+  city: string,
+  street: string
+}
+
+
+export interface CustomerDetail {
   id: number,
-  address: {
-    country: string,
-    state: string,
-    city: string,
-    street: string
-  },
+  address: AddressDetails,
   avatarUrl: string,
   createdAt: number,
   email: string,
@@ -14,7 +17,7 @@ export interface CustomersDetails {
 }
 
 
-export const customersDetails: CustomersDetails[] = [
+export const customersDetails: CustomerDetail[] = [
   {
     id: 1,
     address: {
