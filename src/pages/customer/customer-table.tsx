@@ -13,51 +13,52 @@ import { format } from 'date-fns';
 import React, { useState } from 'react';
 import { CustomerDetail, customersDetails } from './types';
 
-
-interface EnhancedTableToolbarProps {
-  numSelected: number;
-}
-
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }),
-      }}
-    >
-      {numSelected > 0 && (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      )}
-      {numSelected > 0 && (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-};
-
 export default function CustomerTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selected, setSelected] = useState([]);
   const [customerList, setCustomerList] = useState(customersDetails);
+
+  const EnhancedTableToolbar = (props: any, index: number) => {
+    const { numSelected } = props;
+
+    const handleDelete = () => {
+      let newList = customerList.filter((element) => element.selected !== true)
+      setCustomerList(newList)
+      setSelected([])
+    }
+
+    return (
+      <Toolbar
+        sx={{
+          pl: { sm: 2 },
+          pr: { xs: 1, sm: 1 },
+          ...(numSelected.length > 0 && {
+            bgcolor: (theme) =>
+              alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+          }),
+        }}
+      >
+        {numSelected.length > 0 && (
+          <Typography
+            sx={{ flex: '1 1 100%' }}
+            color="inherit"
+            variant="subtitle1"
+            component="div"
+          >
+            {numSelected.length} selected
+          </Typography>
+        )}
+        {numSelected.length > 0 && (
+          <Tooltip title="Delete">
+            <IconButton onClick={handleDelete}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+      </Toolbar>
+    );
+  };
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -95,12 +96,10 @@ export default function CustomerTable() {
     setCustomerList(newList);
   };
 
-
-
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected} />
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <TableHead style={{ background: 'rgb(243 244 246)' }}>
@@ -123,9 +122,9 @@ export default function CustomerTable() {
             </TableHead>
             <TableBody>
               {customerList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: any, index: number) => {
+                .map((row: any) => {
                   return (
-                    <TableRow key={index + 1}>
+                    <TableRow key={row.id}>
                       <TableCell padding="checkbox">
                         <label>
                           <Checkbox
