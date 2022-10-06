@@ -11,29 +11,29 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import NavBar from '../../layout/nav';
 import CustomerTable from './customer-table';
+import { useState } from 'react'
+import { customersDetails } from './types';
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      <Link color="inherit" href="https://mui.com/">Your Website</Link>{' '}
+      {new Date().getFullYear()}{'.'}
     </Typography>
   );
 }
-
 const mdTheme = createTheme();
 
 function Customer() {
+  const [customerList, setCustomerList] = useState([])
 
   const handleOnChange = (e: any) => {
     const { value } = e.target
-    console.log(value)
+    const details: any = customersDetails.filter((item) => item.name.match(value))
+    setCustomerList(details)
+    console.log(details)
   }
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -82,7 +82,7 @@ function Customer() {
               </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <CustomerTable />
+                  <CustomerTable customerListDetails={customerList} />
                 </Paper>
               </Grid>
             </Grid>

@@ -10,20 +10,25 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { format } from 'date-fns';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CustomerDetail, customersDetails } from './types';
 
-export default function CustomerTable() {
+export default function CustomerTable(props: any) {
+  const { customerListDetails } = props
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selected, setSelected] = useState([]);
   const [customerList, setCustomerList] = useState(customersDetails);
 
+  useEffect(() => {
+    setCustomerList(customerListDetails)
+  }, [customerListDetails])
+
   const EnhancedTableToolbar = (props: any, index: number) => {
     const { numSelected } = props;
 
     const handleDelete = (e: any) => {
-      let newList = customerList.filter((element) => element.selected !== true)
+      let newList = customerList.filter((element: any) => element.selected !== true)
       setCustomerList(newList)
       setSelected([])
     }
@@ -126,7 +131,7 @@ export default function CustomerTable() {
                   <label>
                     <Checkbox
                       name='mainBox'
-                      checked={selected.length === 0 ? false : customerList.every((item) => item.selected)}
+                      checked={selected.length === 0 ? false : customerList.every((item: any) => item.selected)}
                       onChange={handleOnSelectAll}
                       inputProps={{ 'aria-label': 'controlled' }}
                     />
