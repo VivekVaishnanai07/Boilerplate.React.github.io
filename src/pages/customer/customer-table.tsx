@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import { alpha, Avatar, Checkbox, IconButton, TablePagination, Toolbar, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -7,7 +8,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
 import { format } from 'date-fns';
 import React, { useState } from 'react';
@@ -22,7 +22,7 @@ export default function CustomerTable() {
   const EnhancedTableToolbar = (props: any, index: number) => {
     const { numSelected } = props;
 
-    const handleDelete = () => {
+    const handleDelete = (e: any) => {
       let newList = customerList.filter((element) => element.selected !== true)
       setCustomerList(newList)
       setSelected([])
@@ -39,7 +39,7 @@ export default function CustomerTable() {
           }),
         }}
       >
-        {numSelected.length > 0 && (
+        {numSelected.length > 0 ? (
           <Typography
             sx={{ flex: '1 1 100%' }}
             color="inherit"
@@ -47,6 +47,16 @@ export default function CustomerTable() {
             component="div"
           >
             {numSelected.length} selected
+          </Typography>
+        ) : (
+          <Typography
+            sx={{ flex: '1 1 100%' }}
+            variant="h6"
+            id="tableTitle"
+            component="div"
+            style={{ fontWeight: '700' }}
+          >
+            Daily Customer
           </Typography>
         )}
         {numSelected.length > 0 && (
@@ -59,21 +69,18 @@ export default function CustomerTable() {
       </Toolbar>
     );
   };
-
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
   ) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   const handleOnChange = (e: any, items: CustomerDetail) => {
     const { name, checked } = e.target;
     const newList = [...customerList];
@@ -95,7 +102,18 @@ export default function CustomerTable() {
     setSelected(newData)
     setCustomerList(newList);
   };
-
+  const handleOnSelectAll = (e: any) => {
+    const { checked } = e.target;
+    let allChecked = [...customerList];
+    if (!checked) {
+      allChecked = allChecked.map((opt) => ({ ...opt, selected: false }));
+    } else {
+      allChecked = allChecked.map((opt) => ({ ...opt, selected: true }));
+    }
+    setCustomerList(allChecked)
+    let allSelected: any = allChecked.filter((item) => item.selected === true)
+    setSelected(allSelected)
+  };
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -107,8 +125,9 @@ export default function CustomerTable() {
                 <TableCell padding="checkbox">
                   <label>
                     <Checkbox
-                      checked={false}
-                      // onChange={handleOnChange}
+                      name='mainBox'
+                      checked={selected.length === 0 ? false : customerList.every((item) => item.selected)}
+                      onChange={handleOnSelectAll}
                       inputProps={{ 'aria-label': 'controlled' }}
                     />
                   </label>
