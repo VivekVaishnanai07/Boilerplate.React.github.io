@@ -1,6 +1,5 @@
-import { Avatar, TablePagination } from '@mui/material';
+import { alpha, Avatar, Checkbox, IconButton, TablePagination, Toolbar, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,41 +7,57 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { format } from 'date-fns'
+import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
-import { customersDetails, EnhancedTableProps } from './types';
+import { format } from 'date-fns';
+import React, { useState } from 'react';
+import { CustomerDetail, customersDetails } from './types';
 
-function EnhancedTableHead(props: EnhancedTableProps) {
-  const { onSelectAllClick, numSelected, rowCount } = props;
-  return (
-    <TableHead style={{ background: 'rgb(243 244 246)' }}>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          />
-        </TableCell>
-        <TableCell>NAME</TableCell>
-        <TableCell>EMAIL</TableCell>
-        <TableCell>LOCATION</TableCell>
-        <TableCell>PHONE</TableCell>
-        <TableCell>REGISTRATION DATE</TableCell>
-      </TableRow>
-    </TableHead>
-  );
+
+interface EnhancedTableToolbarProps {
+  numSelected: number;
 }
 
+const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
+  const { numSelected } = props;
+
+  return (
+    <Toolbar
+      sx={{
+        pl: { sm: 2 },
+        pr: { xs: 1, sm: 1 },
+        ...(numSelected > 0 && {
+          bgcolor: (theme) =>
+            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+        }),
+      }}
+    >
+      {numSelected > 0 && (
+        <Typography
+          sx={{ flex: '1 1 100%' }}
+          color="inherit"
+          variant="subtitle1"
+          component="div"
+        >
+          {numSelected} selected
+        </Typography>
+      )}
+      {numSelected > 0 && (
+        <Tooltip title="Delete">
+          <IconButton>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+    </Toolbar>
+  );
+};
+
 export default function CustomerTable() {
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [selected, setSelected] = useState([]);
+  const [customerList, setCustomerList] = useState(customersDetails);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -58,85 +73,78 @@ export default function CustomerTable() {
     setPage(0);
   };
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = customersDetails.map((n) => n.name);
-      setSelected(newSelected);
-      return;
+  const handleOnChange = (e: any, items: CustomerDetail) => {
+    const { name, checked } = e.target;
+    const newList = [...customerList];
+    const index = newList.findIndex((h) => h.name === name);
+    if (index > -1) {
+      newList[index] = {
+        name,
+        selected: checked,
+        address: items.address,
+        avatarUrl: items.avatarUrl,
+        createdAt: items.createdAt,
+        email: items.email,
+        phone: items.phone,
+        id: items.id
+      };
     }
-    setSelected([]);
+    let selectedData = newList.map((item: any) => item.selected)
+    let newData: any = selectedData.filter((element: any) => element === true)
+    setSelected(newData)
+    setCustomerList(newList);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
+        <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              numSelected={selected.length}
-              onSelectAllClick={handleSelectAllClick}
-              rowCount={customersDetails.length}
-            />
+            <TableHead style={{ background: 'rgb(243 244 246)' }}>
+              <TableRow>
+                <TableCell padding="checkbox">
+                  <label>
+                    <Checkbox
+                      checked={false}
+                      // onChange={handleOnChange}
+                      inputProps={{ 'aria-label': 'controlled' }}
+                    />
+                  </label>
+                </TableCell>
+                <TableCell>NAME</TableCell>
+                <TableCell>EMAIL</TableCell>
+                <TableCell>LOCATION</TableCell>
+                <TableCell>PHONE</TableCell>
+                <TableCell>REGISTRATION DATE</TableCell>
+              </TableRow>
+            </TableHead>
             <TableBody>
-              {customersDetails.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              {customerList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: any, index: number) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
                   return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
+                    <TableRow key={index + 1}>
                       <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        />
+                        <label>
+                          <Checkbox
+                            name={row.name}
+                            checked={row.selected}
+                            onChange={(e) => handleOnChange(e, row)}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                          />
+                        </label>
                       </TableCell>
                       <TableCell>
                         <Box sx={{ alignItems: 'center', display: 'flex' }}>
                           <Avatar src={row.avatarUrl} sx={{ mr: 2 }}>
                           </Avatar>
-                          <Typography color="textPrimary" variant="body1">
-                            {row.name}
-                          </Typography>
+                          <Typography color="textPrimary" variant="body1">{row.name}</Typography>
                         </Box>
                       </TableCell>
                       <TableCell >{row.email}</TableCell>
-                      <TableCell >
-                        {`${row.address.city}, ${row.address.state}, ${row.address.country}`}
-                      </TableCell>
+                      <TableCell >{`${row.address.city}, ${row.address.state}, ${row.address.country}`}</TableCell>
                       <TableCell >{row.phone}</TableCell>
                       <TableCell >{format(new Date(), 'dd/MM/yyyy')}</TableCell>
                     </TableRow>

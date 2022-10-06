@@ -7,6 +7,7 @@ export interface AddressDetails {
 
 export interface CustomerDetail {
   id: number,
+  selected: boolean,
   address: AddressDetails,
   avatarUrl: string,
   createdAt: number,
@@ -19,6 +20,7 @@ export interface CustomerDetail {
 export const customersDetails: CustomerDetail[] = [
   {
     id: 1,
+    selected: false,
     address: {
       country: 'USA',
       state: 'West Virginia',
@@ -33,6 +35,7 @@ export const customersDetails: CustomerDetail[] = [
   },
   {
     id: 2,
+    selected: false,
     address: {
       country: 'USA',
       state: 'Bristow',
@@ -47,6 +50,7 @@ export const customersDetails: CustomerDetail[] = [
   },
   {
     id: 3,
+    selected: false,
     address: {
       country: 'USA',
       state: 'Georgia',
@@ -61,6 +65,7 @@ export const customersDetails: CustomerDetail[] = [
   },
   {
     id: 4,
+    selected: false,
     address: {
       country: 'USA',
       state: 'Ohio',
@@ -75,6 +80,7 @@ export const customersDetails: CustomerDetail[] = [
   },
   {
     id: 5,
+    selected: false,
     address: {
       country: 'USA',
       state: 'Texas',
@@ -89,6 +95,7 @@ export const customersDetails: CustomerDetail[] = [
   },
   {
     id: 6,
+    selected: false,
     address: {
       country: 'USA',
       state: 'California',
@@ -103,6 +110,7 @@ export const customersDetails: CustomerDetail[] = [
   },
   {
     id: 7,
+    selected: false,
     address: {
       country: 'USA',
       state: 'California',
@@ -117,6 +125,7 @@ export const customersDetails: CustomerDetail[] = [
   },
   {
     id: 8,
+    selected: false,
     address: {
       country: 'USA',
       state: 'Nevada',
@@ -131,6 +140,7 @@ export const customersDetails: CustomerDetail[] = [
   },
   {
     id: 9,
+    selected: false,
     address: {
       country: 'USA',
       state: 'Michigan',
@@ -145,6 +155,7 @@ export const customersDetails: CustomerDetail[] = [
   },
   {
     id: 10,
+    selected: false,
     address: {
       country: 'USA',
       state: 'Utah',
