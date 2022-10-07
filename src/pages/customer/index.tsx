@@ -1,6 +1,6 @@
 import PeopleIcon from '@mui/icons-material/People';
 import SearchIcon from '@mui/icons-material/Search';
-import { InputAdornment, SvgIcon, TextField } from '@mui/material';
+import { Autocomplete, InputAdornment, SvgIcon, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -57,27 +57,39 @@ function Customer() {
               {/* Recent CustomersTable */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Box sx={{ alignItems: 'center', display: 'flex' }}>
-                    <PeopleIcon sx={{ fontSize: '35px', mr: 1 }} />
-                    <Typography style={{ fontWeight: '700', fontSize: '25px', lineHeight: '5px' }}>
-                      Customers
-                    </Typography>
-                    <TextField
-                      style={{ marginLeft: '62%' }}
-                      onChange={handleOnChange}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <SvgIcon color="action" fontSize="small">
-                              <SearchIcon />
-                            </SvgIcon>
-                          </InputAdornment>
-                        )
-                      }}
-                      placeholder="Search customer"
-                      variant="outlined"
-                    />
-                  </Box>
+                  <Grid item xs={12}>
+                    <Box sx={{ alignItems: 'center', display: 'flex', paddingBottom: '5px' }}>
+                      <PeopleIcon sx={{ fontSize: '35px', mr: 1 }} />
+                      <Typography style={{ fontWeight: '700', fontSize: '25px', lineHeight: '5px' }}>
+                        Customers
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Box sx={{ alignItems: 'center', display: 'flex' }}>
+                      <Autocomplete
+                        options={customerList.map((item) => item.name)}
+                        id="disabled-options-demo"
+                        sx={{ width: 300 }}
+                        renderInput={(params) => <TextField {...params} label="Select City" />}
+                      />
+                      <TextField
+                        style={{ marginLeft: '51%' }}
+                        onChange={handleOnChange}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SvgIcon color="action" fontSize="small">
+                                <SearchIcon />
+                              </SvgIcon>
+                            </InputAdornment>
+                          )
+                        }}
+                        placeholder="Search customer"
+                        variant="outlined"
+                      />
+                    </Box>
+                  </Grid>
                 </Paper>
               </Grid>
               <Grid item xs={12}>
