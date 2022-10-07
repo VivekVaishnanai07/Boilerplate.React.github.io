@@ -21,7 +21,7 @@ export default function CustomerTable(props: any) {
   const [customerList, setCustomerList] = useState(customersDetails);
 
   useEffect(() => {
-    setCustomerList(customerListDetails) 
+    setCustomerList(customerListDetails)
   }, [customerListDetails])
 
   const EnhancedTableToolbar = (props: any, index: number) => {
@@ -139,7 +139,8 @@ export default function CustomerTable(props: any) {
                 </TableCell>
                 <TableCell>NAME</TableCell>
                 <TableCell>EMAIL</TableCell>
-                <TableCell>LOCATION</TableCell>
+                <TableCell>CITY</TableCell>
+                <TableCell>COUNTRY</TableCell>
                 <TableCell>PHONE</TableCell>
                 <TableCell>REGISTRATION DATE</TableCell>
               </TableRow>
@@ -167,7 +168,8 @@ export default function CustomerTable(props: any) {
                         </Box>
                       </TableCell>
                       <TableCell >{row.email}</TableCell>
-                      <TableCell >{`${row.address.city}, ${row.address.state}, ${row.address.country}`}</TableCell>
+                      <TableCell >{row.address.city}</TableCell>
+                      <TableCell >{row.address.country}</TableCell>
                       <TableCell >{row.phone}</TableCell>
                       <TableCell >{format(new Date(), 'dd/MM/yyyy')}</TableCell>
                     </TableRow>

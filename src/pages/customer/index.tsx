@@ -34,6 +34,12 @@ function Customer() {
     setCustomerList(details)
     console.log(details)
   }
+  const handlerSelect = (e: any) => {
+    e.preventDefault()
+    const { value } = e.target
+    const details: any = customersDetails.filter((item) => item.address.city.match(value))
+    setCustomerList(details)
+  }
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -52,7 +58,7 @@ function Customer() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={2}>
               {/* Recent CustomersTable */}
               <Grid item xs={12}>
@@ -68,8 +74,10 @@ function Customer() {
                   <Grid item xs={12}>
                     <Box sx={{ alignItems: 'center', display: 'flex' }}>
                       <Autocomplete
-                        options={customerList.map((item) => item.name)}
-                        id="disabled-options-demo"
+                        freeSolo
+                        options={customerList.map((item) => item.address.city)}
+                        onSelect={handlerSelect}
+                        id="free-solo-2-demo"
                         sx={{ width: 300 }}
                         renderInput={(params) => <TextField {...params} label="Select City" />}
                       />
