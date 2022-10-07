@@ -21,7 +21,7 @@ export default function CustomerTable(props: any) {
   const [customerList, setCustomerList] = useState(customersDetails);
 
   useEffect(() => {
-    setCustomerList(customerListDetails)
+    setCustomerList(customerListDetails) 
   }, [customerListDetails])
 
   const EnhancedTableToolbar = (props: any, index: number) => {

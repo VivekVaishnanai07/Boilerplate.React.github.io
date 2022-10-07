@@ -26,7 +26,7 @@ function Copyright(props: any) {
 const mdTheme = createTheme();
 
 function Customer() {
-  const [customerList, setCustomerList] = useState([])
+  const [customerList, setCustomerList] = useState(customersDetails)
 
   const handleOnChange = (e: any) => {
     const { value } = e.target
